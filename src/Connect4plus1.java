@@ -47,6 +47,7 @@ public class Connect4plus1 {
         int x=0;
         String columnt;
         displayGrid();
+        boolean notValid;
 
 
         while (gO == false){
@@ -55,7 +56,7 @@ public class Connect4plus1 {
             column = -1;
             playerOneTurn = true;
             while (column > 6 || column < 0) {
-                boolean notValid = true;
+                notValid = true;
                 while (notValid == true) {
                     System.out.printf("%s choose a column: ", name1);
                     columnt = s.nextLine();
@@ -84,8 +85,16 @@ public class Connect4plus1 {
             column = -1;
             playerOneTurn = false;
             while (column > 6 || column < 0) {
-                System.out.printf("%s choose a column: ",name2);
-                column = s.nextInt() - 1;
+                notValid = true;
+                while (notValid == true) {
+                    System.out.printf("%s choose a column: ", name2);
+                    columnt = s.nextLine();
+                    try {
+                        x = Integer.parseInt(columnt);
+                        notValid = false;
+                    } catch (Exception ignored) {}
+                }
+                column = x - 1;
                 if (column < 0 || column > 6){
                     int r = (int)(Math.random()*2)+1;
                     if (r == 1) System.out.println("That's not a column dummy.");
