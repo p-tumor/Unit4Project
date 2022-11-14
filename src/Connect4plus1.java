@@ -49,7 +49,6 @@ public class Connect4plus1 {
         displayGrid();
         boolean notValid;
 
-
         while (gO == false){
             //player 1 turn
             i = 5;
@@ -63,7 +62,12 @@ public class Connect4plus1 {
                     try {
                         x = Integer.parseInt(columnt);
                         notValid = false;
-                    } catch (Exception ignored) {}
+                    } catch (Exception NumberFormatException) {
+                        int r = (int)(Math.random()*2)+1;
+                        if (r == 1) System.out.println("Bro.");
+                        if (r == 2) System.out.println("C'mon.");
+                        if (r == 3)System.out.println("Doofus.");
+                    }
                 }
                 column = x-1;
                 if (column < 0 || column > 6){
@@ -92,7 +96,12 @@ public class Connect4plus1 {
                     try {
                         x = Integer.parseInt(columnt);
                         notValid = false;
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                        int r = (int)(Math.random()*2)+1;
+                        if (r == 1) System.out.println("Bro.");
+                        if (r == 2) System.out.println("C'mon.");
+                        if (r == 3)System.out.println("Doofus.");
+                    }
                 }
                 column = x - 1;
                 if (column < 0 || column > 6){
