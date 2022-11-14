@@ -17,7 +17,7 @@ public class Connect4Runner {
 
 
 
-        /*Scanner n = new Scanner(System.in);
+        Scanner n = new Scanner(System.in);
 
         System.out.println("Player 1 input your desired name: ");
         String n1 = n.nextLine();
@@ -26,7 +26,7 @@ public class Connect4Runner {
 
         Connect4plus1 p = new Connect4plus1(n1,n2);
 
-        p.game();*/
+        p.game();
 
     }
 }

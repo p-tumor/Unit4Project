@@ -44,6 +44,8 @@ public class Connect4plus1 {
         int column;
         int i;
         boolean gO = false;
+        int x=0;
+        String columnt;
         displayGrid();
 
 
@@ -53,10 +55,21 @@ public class Connect4plus1 {
             column = -1;
             playerOneTurn = true;
             while (column > 6 || column < 0) {
-                System.out.printf("%s choose a column: ",name1);
-                column = s.nextInt() - 1;
+                boolean notValid = true;
+                while (notValid == true) {
+                    System.out.printf("%s choose a column: ", name1);
+                    columnt = s.nextLine();
+                    try {
+                        x = Integer.parseInt(columnt);
+                        notValid = false;
+                    } catch (Exception ignored) {}
+                }
+                column = x-1;
                 if (column < 0 || column > 6){
-                    System.out.println("That's not a column dummy.");
+                    int r = (int)(Math.random()*2)+1;
+                    if (r == 1) System.out.println("That's not a column dummy.");
+                    if (r == 2) System.out.println("Bozo try again.");
+                    if (r == 3)System.out.println("Barnacle brain");
                 }
             }
             columnCheck(i,column,playerOneTurn);
@@ -74,7 +87,10 @@ public class Connect4plus1 {
                 System.out.printf("%s choose a column: ",name2);
                 column = s.nextInt() - 1;
                 if (column < 0 || column > 6){
-                    System.out.println("Bozo try again.");
+                    int r = (int)(Math.random()*2)+1;
+                    if (r == 1) System.out.println("That's not a column dummy.");
+                    if (r == 2) System.out.println("Bozo try again.");
+                    if (r == 3)System.out.println("Barnacle brain");
                 }
             }
             columnCheck(i,column,playerOneTurn);
