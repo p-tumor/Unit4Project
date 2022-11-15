@@ -118,9 +118,14 @@ public class Connect4plus1 {
             gO = gameOver(checkRow,column);
             if (gO == true) break;
         }
-        if (playerOneTurn == true) System.out.printf("Congratulations %s, you win!",name1);
+        if (playerOneTurn == true){
+            String str ="Congratulations " + name1 + ". You win!";
+            return str;
+        }
+
         if (playerOneTurn == false) System.out.printf("Congratulations %s, you win!",name2);
     }
+
 
     private boolean downCheck(int row, int column){
         int count = 0;
