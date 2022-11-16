@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Connect4Runner {
     public static void main(String[] args) {
         new Connect4Frame();
-
+        boolean gameOver = false;
 
 
 
@@ -27,16 +27,22 @@ public class Connect4Runner {
 
         Connect4plus1 p = new Connect4plus1(n1,n2);
 
-        p.game();
+        p.displayGrid();
+
+
+
+        while (gameOver = false){
+
+        }
 
     }
 
-    public static void clear() {
+    /*public static void clear() {
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
                 Runtime.getRuntime().exec("clear");
         } catch (IOException | InterruptedException ex) {}
-    }
+    }*/
 }

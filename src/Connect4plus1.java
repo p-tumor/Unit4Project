@@ -18,19 +18,25 @@ public class Connect4plus1 {
         name2 = n2;
     }
 
-    private void displayGrid(){
-        System.out.println("-------------------------------");
+    public String displayGrid(){
+        String s = "-------------------------------\n";
         for (int r = 0; r < 6; r++){
             for (int c = 0; c < 7; c++){
-                System.out.print("| "+ grid[r][c]);
-                System.out.print(" |");
+                s += "| "+ grid[r][c];
+                s += " |";
             }
-            System.out.println();
+            s += "\n";
         }
-        System.out.println("-------------------------------");
+        s += "-------------------------------\n";
+        return s;
     }
 
-    private boolean gameOver(int row, int column){
+    public String congratulate(boolean b){
+        if (b == true) return "Congratulations " + name1 + ". You win!";
+        else return "Congratulations " + name2 + ". You win!";
+    }
+
+    public boolean gameOver(int row, int column){
         if (downCheck(row, column)) return true;
         if (LRCheck(row,column)) return true;
         if (upperRight2LowerLeft(row,column) == true) return true;
@@ -118,12 +124,7 @@ public class Connect4plus1 {
             gO = gameOver(checkRow,column);
             if (gO == true) break;
         }
-        if (playerOneTurn == true){
-            String str ="Congratulations " + name1 + ". You win!";
-            return str;
-        }
-
-        if (playerOneTurn == false) System.out.printf("Congratulations %s, you win!",name2);
+        congratulate(playerOneTurn);
     }
 
 
@@ -265,6 +266,32 @@ public class Connect4plus1 {
             }
         }
         checkRow= t;
+    }
+
+    public int userVal(String s){
+        int x;
+        try{
+            x = Integer.parseInt(s);
+        }catch(Exception e) {
+            return -1;
+        }
+        if (x > 6 || x < 0)  return -1;
+        return x;
+
+
+
+
+
+
+    }
+    private String userValRan(){
+        int r = (int)(Math.random()*5)+1;
+        if (r == 1) return "Bro.";
+        if (r == 2) return "C'mon.";
+        if (r == 3) return "That's not a column dummy.";
+        if (r == 4) return "Bozo try again.";
+        if (r == 5) return "Barnacle brain";
+        return "Doofus.";
     }
 }
 
