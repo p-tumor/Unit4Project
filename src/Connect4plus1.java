@@ -10,13 +10,16 @@ public class Connect4plus1 {
             { 0 , 0 , 0, 0 , 0 , 0 , 0 }
     };
     private int checkRow;
-    private String name1;
-    private String name2;
+    private String p1;
+    private String p2;
 
     public Connect4plus1(String n, String n2){
-        name1 = n;
-        name2 = n2;
+        p1 = n;
+        p2 = n2;
     }
+
+    public String getP1(){return p1;}
+    public String getP2(){return p2;}
 
     public String displayGrid(){
         String s = "-------------------------------\n";
@@ -32,8 +35,8 @@ public class Connect4plus1 {
     }
 
     public String congratulate(boolean b){
-        if (b == true) return "Congratulations " + name1 + ". You win!";
-        else return "Congratulations " + name2 + ". You win!";
+        if (b == true) return "Congratulations " + p1 + ". You win!";
+        else return "Congratulations " + p2 + ". You win!";
     }
 
     public boolean gameOver(int row, int column){
@@ -277,14 +280,9 @@ public class Connect4plus1 {
         }
         if (x > 6 || x < 0)  return -1;
         return x;
-
-
-
-
-
-
     }
-    private String userValRan(){
+
+    public String userValRan(){
         int r = (int)(Math.random()*5)+1;
         if (r == 1) return "Bro.";
         if (r == 2) return "C'mon.";

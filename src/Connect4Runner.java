@@ -29,10 +29,24 @@ public class Connect4Runner {
 
         p.displayGrid();
 
-
-
         while (gameOver = false){
+            int row = 5;
+            int col;
+            boolean pOneTurn = true;
+            boolean notValid = true;
 
+            while (notValid){
+                System.out.printf("%s choose a column: ", p.getP1());
+                String colTemp = n.nextLine();
+                if (p.userVal(colTemp) == -1){
+                    System.out.println(p.userValRan());
+                }else {
+                    col = p.userVal(colTemp);
+                    notValid = false;
+                }
+            }
+
+            cl
         }
 
     }
