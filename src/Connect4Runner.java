@@ -7,12 +7,11 @@ import static java.lang.System.exit;
 
 public class Connect4Runner {
     public static void main(String[] args) {
-        new Connect4Frame();
+        //new Connect4Frame();
 
         boolean gameOver = false;
         int row = 5;
         int col = 0;
-        boolean pOneTurn = true;
         boolean notValid = true;
 
         Scanner n = new Scanner(System.in);
@@ -28,7 +27,6 @@ public class Connect4Runner {
         while (gameOver == false) {
             row = 5;
             col = 0;
-            pOneTurn = true;
             notValid = true;
 
             //player 1 turn
@@ -47,16 +45,15 @@ public class Connect4Runner {
                 }
             }
 
-            p.columnCheck(row, col, pOneTurn);
+            p.columnCheck(row, col);
             System.out.println(p.displayGrid());
-
+            System.out.println("IS it p1 turn "+p.isP1Turn());
             //game over check
             gameOver = p.gameOver(col);
             if (gameOver) break;
 
             row = 5;
             col = 0;
-            pOneTurn = false;
             notValid = true;
 
             //player 2 turn
@@ -75,15 +72,16 @@ public class Connect4Runner {
                 }
             }
 
-            p.columnCheck(row, col, pOneTurn);
+            p.columnCheck(row, col);
             System.out.println(p.displayGrid());
+            System.out.println("IS it p1 turn "+p.isP1Turn());
 
             //game over check
             gameOver = p.gameOver(col);
             if (gameOver) break;
         }
 
-        System.out.println(p.congratulate(pOneTurn));
+        System.out.println(p.congratulate());
         exit(0);
     }
 

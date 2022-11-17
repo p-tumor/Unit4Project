@@ -14,26 +14,45 @@ public class Connect4plus1 {
     private String p1;
     private String p2;
     private String color;
+    private boolean p1Turn;
 
     public Connect4plus1(String n, String n2){
         p1 = n;
         p2 = n2;
+        p1Turn = true;
     }
     public Connect4plus1(){
         p1 = "Player 1";
-        p2 = "Player 1";
+        p2 = "Player 2";
+        p1Turn = true;
     }
-    public Connect4plus1(String n){
-        p1 = "Player 1";
-        p2 = n;
-    }
-    public Connect4plus1(String x){
-        p1 = n;
-        p2 = "Player 1";
-    }
+
 
     public String getP1(){return p1;}
     public String getP2(){return p2;}
+
+    public String getGrid(){
+        String s = "-------------------------------\n";
+        for (int r = 0; r < 6; r++){
+            for (int c = 0; c < 7; c++){
+                s += "| "+ grid[r][c];
+                s += " |";
+            }
+            s += "\n";
+        }
+        int x = 1;
+        while (x <8){
+            s += "  "+x+"  ";
+            x++;
+        }
+        s += "\n";
+        s += "-------------------------------";
+        return s;
+    }
+
+    public boolean isP1Turn(){
+        return p1Turn;
+    }
 
     public String displayGrid(){
         String s = "-------------------------------\n";
@@ -55,8 +74,8 @@ public class Connect4plus1 {
         return s;
     }
 
-    public String congratulate(boolean b){
-        if (b) return "Congratulations " + p1 + ". You win!";
+    public String congratulate(){
+        if (isP1Turn() == true) return "Congratulations " + p1 + ". You win!";
         else return "Congratulations " + p2 + ". You win!";
     }
 
@@ -182,11 +201,11 @@ public class Connect4plus1 {
         return count == 3;
     }
 
-    public void columnCheck(int row, int column, boolean b){
+    public void columnCheck(int row, int column){
         int t = row;
-        if (b == true){
+        if (isP1Turn() == true){
             while(row>=0){
-                if (grid[t][column] == "0"){
+                if (grid[t][column].equals("0")){
                     grid[t][column] = "\033[31m1\033[0m";
                     break;
                 }else{
@@ -195,9 +214,9 @@ public class Connect4plus1 {
                 }
             }
         }
-        if (b == false){
+        if (isP1Turn() == false){
             while(t>=0){
-                if (grid[t][column] == "0"){
+                if (grid[t][column].equals("0")){
                     grid[t][column] = "\033[33m2\033[0m";
                     break;
                 }else{
@@ -217,6 +236,8 @@ public class Connect4plus1 {
             return -1;
         }
         if (x > 7 || x < 0)  return -1;
+        if (isP1Turn() == true) p1Turn = false;
+        else p1Turn = true;
         return x-1;
     }
 
@@ -239,6 +260,16 @@ public class Connect4plus1 {
         if (r == 1) return "Are you even looking?";
         if (r == 2) return "Open your eyes.";
         return "Seek visual assistance.";
+    }
+
+    public String toString(){
+        String str = "This is the current grid: \n";
+        str += getGrid() + "\n";
+        str += "Player 1 name: "+getP1()+"\n";
+        str += "Player 2 name: "+getP2()+"\n";
+        if (isP1Turn()) str += "It is "+getP1()+"'s turn.";
+        else str += "It is "+getP2()+"'s turn.";
+        return str;
     }
 }
 
