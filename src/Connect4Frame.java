@@ -11,7 +11,11 @@ public class Connect4Frame extends JFrame implements ActionListener {
         JLabel label = new JLabel("Start Game");
         button = new JButton();
 
-        button.setBounds(200,100,100,50);
+        button.setBounds(200,100,250,100);
+        button.addActionListener(e -> System.out.println("poo"));
+        button.setText("Start Game");
+        button.setFocusable(false);
+        button.setFont(new Font("Comfortaa",Font.PLAIN,12));
         frame.add(button);
 
         label.setIcon(image);

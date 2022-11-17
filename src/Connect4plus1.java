@@ -1,17 +1,18 @@
 import java.util.Scanner;
 public class Connect4plus1 {
 
-    private int[][] grid = {
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 },
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 },
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 },
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 },
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 },
-            { 0 , 0 , 0, 0 , 0 , 0 , 0 }
+    private String[][] grid = {
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
+            { "0" , "0" , "0" , "0" , "0" , "0" , "0" }
     };
     private int checkRow;
     private String p1;
     private String p2;
+    private String color;
 
     public Connect4plus1(String n, String n2){
         p1 = n;
@@ -30,106 +31,23 @@ public class Connect4plus1 {
             }
             s += "\n";
         }
-        s += "-------------------------------\n";
+        s += "-------------------------------";
         return s;
     }
 
     public String congratulate(boolean b){
-        if (b == true) return "Congratulations " + p1 + ". You win!";
+        if (b) return "Congratulations " + p1 + ". You win!";
         else return "Congratulations " + p2 + ". You win!";
     }
 
-    public boolean gameOver(int row, int column){
+    public boolean gameOver(int column){
+        int row = checkRow;
         if (downCheck(row, column)) return true;
         if (LRCheck(row,column)) return true;
-        if (upperRight2LowerLeft(row,column) == true) return true;
-        if (upperLeft2LowerRight(row,column) == true) return true;
-        return false;
+        if (upperRight2LowerLeft(row,column)) return true;
+        if (upperLeft2LowerRight(row,column)) return true;
+        else return false;
     }
-
-    public void game(){
-        Scanner s = new Scanner(System.in);
-        boolean playerOneTurn = true;
-        int column;
-        int i;
-        boolean gO = false;
-        int x=0;
-        String columnt;
-        displayGrid();
-        boolean notValid;
-
-        while (gO == false){
-            //player 1 turn
-            i = 5;
-            column = -1;
-            playerOneTurn = true;
-            while (column > 6 || column < 0) {
-                notValid = true;
-                while (notValid == true) {
-                    System.out.printf("%s choose a column: ", name1);
-                    columnt = s.nextLine();
-                    try {
-                        x = Integer.parseInt(columnt);
-                        notValid = false;
-                    } catch (Exception NumberFormatException) {
-                        int r = (int)(Math.random()*2)+1;
-                        if (r == 1) System.out.println("Bro.");
-                        if (r == 2) System.out.println("C'mon.");
-                        if (r == 3)System.out.println("Doofus.");
-                    }
-                }
-                column = x-1;
-                if (column < 0 || column > 6){
-                    int r = (int)(Math.random()*2)+1;
-                    if (r == 1) System.out.println("That's not a column dummy.");
-                    if (r == 2) System.out.println("Bozo try again.");
-                    if (r == 3)System.out.println("Barnacle brain");
-                }
-            }
-            columnCheck(i,column,playerOneTurn);
-            displayGrid();
-
-            //game over check for player 1
-            gO = gameOver(checkRow,column);
-            if (gO == true) break;
-
-            //player 2 turn
-            i = 5;
-            column = -1;
-            playerOneTurn = false;
-            while (column > 6 || column < 0) {
-                notValid = true;
-                while (notValid == true) {
-                    System.out.printf("%s choose a column: ", name2);
-                    columnt = s.nextLine();
-                    try {
-                        x = Integer.parseInt(columnt);
-                        notValid = false;
-                    } catch (Exception ignored) {
-                        int r = (int)(Math.random()*2)+1;
-                        if (r == 1) System.out.println("Bro.");
-                        if (r == 2) System.out.println("C'mon.");
-                        if (r == 3)System.out.println("Doofus.");
-                    }
-                }
-                column = x - 1;
-                if (column < 0 || column > 6){
-                    int r = (int)(Math.random()*2)+1;
-                    if (r == 1) System.out.println("That's not a column dummy.");
-                    if (r == 2) System.out.println("Bozo try again.");
-                    if (r == 3)System.out.println("Barnacle brain");
-                }
-            }
-            columnCheck(i,column,playerOneTurn);
-            displayGrid();
-
-            //game over check for player 2
-            gO = gameOver(checkRow,column);
-            if (gO == true) break;
-        }
-        congratulate(playerOneTurn);
-    }
-
 
     private boolean downCheck(int row, int column){
         int count = 0;
@@ -244,12 +162,12 @@ public class Connect4plus1 {
         return count == 3;
     }
 
-    private void columnCheck(int i, int column, boolean b){
-        int t = i;
+    public void columnCheck(int row, int column, boolean b){
+        int t = row;
         if (b == true){
-            while(i>=0){
-                if (grid[t][column] == 0){
-                    grid[t][column] = 1;
+            while(row>=0){
+                if (grid[t][column] == "0"){
+                    grid[t][column] = "\033[31m1\033[0m";
                     break;
                 }else{
                     t--;
@@ -259,8 +177,8 @@ public class Connect4plus1 {
         }
         if (b == false){
             while(t>=0){
-                if (grid[t][column] == 0){
-                    grid[t][column] = 2;
+                if (grid[t][column] == "0"){
+                    grid[t][column] = "\033[33m2\033[0m";
                     break;
                 }else{
                     t--;
@@ -278,18 +196,29 @@ public class Connect4plus1 {
         }catch(Exception e) {
             return -1;
         }
-        if (x > 6 || x < 0)  return -1;
-        return x;
+        if (x > 7 || x < 0)  return -1;
+        return x-1;
     }
 
     public String userValRan(){
-        int r = (int)(Math.random()*5)+1;
+        int r = (int)(Math.random()*6)+1;
         if (r == 1) return "Bro.";
         if (r == 2) return "C'mon.";
         if (r == 3) return "That's not a column dummy.";
         if (r == 4) return "Bozo try again.";
         if (r == 5) return "Barnacle brain";
         return "Doofus.";
+    }
+
+    public boolean userValColFull(int column){
+        return grid[0][column] != "0";
+    }
+
+    public String userVCFR(){
+        int r = (int)(Math.random()*3)+1;
+        if (r == 1) return "Are you even looking?";
+        if (r == 2) return "Open your eyes.";
+        return "Seek visual assistance.";
     }
 }
 
