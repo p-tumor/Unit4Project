@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 public class Connect4plus1 {
 
@@ -18,6 +19,18 @@ public class Connect4plus1 {
         p1 = n;
         p2 = n2;
     }
+    public Connect4plus1(){
+        p1 = "Player 1";
+        p2 = "Player 1";
+    }
+    public Connect4plus1(String n){
+        p1 = "Player 1";
+        p2 = n;
+    }
+    public Connect4plus1(String x){
+        p1 = n;
+        p2 = "Player 1";
+    }
 
     public String getP1(){return p1;}
     public String getP2(){return p2;}
@@ -29,8 +42,15 @@ public class Connect4plus1 {
                 s += "| "+ grid[r][c];
                 s += " |";
             }
+
             s += "\n";
         }
+        int x = 1;
+        while (x <8){
+            s += "  "+x+"  ";
+            x++;
+        }
+        s += "\n";
         s += "-------------------------------";
         return s;
     }
@@ -100,7 +120,7 @@ public class Connect4plus1 {
         while (count<3){
             if (r-1 == -1) break;
             if (c+1 == 7) break;
-            if (grid[r][c] == grid[r-1][c+1]){
+            if (Objects.equals(grid[r][c], grid[r - 1][c + 1])){
                 count++;
                 r--;
                 c++;
