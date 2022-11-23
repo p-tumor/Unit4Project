@@ -7,7 +7,7 @@ import static java.lang.System.exit;
 
 public class Connect4Runner {
     public static void main(String[] args) {
-        //new Connect4Frame();
+        new Connect4Frame();
 
         boolean gameOver = false;
         int row = 5;
@@ -45,7 +45,7 @@ public class Connect4Runner {
                 }
             }
 
-            p.columnCheck(row, col);
+            p.playerOneTurn(row,col);
             System.out.println(p.displayGrid());
             System.out.println("IS it p1 turn "+p.isP1Turn());
             //game over check
@@ -72,9 +72,9 @@ public class Connect4Runner {
                 }
             }
 
-            p.columnCheck(row, col);
+            p.playerTwoTurn(row,col);
             System.out.println(p.displayGrid());
-            System.out.println("IS it p1 turn "+p.isP1Turn());
+
 
             //game over check
             gameOver = p.gameOver(col);
@@ -116,6 +116,9 @@ public class Connect4Runner {
         {
             //  Handle any exceptions.
         }
-    }*/
-}
+    }
+
+     */
+    }
+
 

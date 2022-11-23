@@ -108,7 +108,7 @@ public class Connect4plus1 {
         // left check
         while (count<3){
             if (i-1 == -1) break;
-            if (grid[row][i] == grid[row][i-1]){
+            if (grid[row][i].equals(grid[row][i-1])){
                 count++;
                 i--;
                 if (i-1 == -1) break;
@@ -120,7 +120,7 @@ public class Connect4plus1 {
         //right check
         while (count<3){
             if (i+1 == 7) break;
-            if (grid[row][i] == grid[row][i+1]){
+            if (grid[row][i].equals(grid[row][i+1])){
                 count++;
                 i++;
                 if (i+1 == 7) break;
@@ -139,7 +139,7 @@ public class Connect4plus1 {
         while (count<3){
             if (r-1 == -1) break;
             if (c+1 == 7) break;
-            if (Objects.equals(grid[r][c], grid[r - 1][c + 1])){
+            if ((grid[r][c].equals(grid[r - 1][c + 1]))){
                 count++;
                 r--;
                 c++;
@@ -154,7 +154,7 @@ public class Connect4plus1 {
         while(count<3){
             if (r+1 == 6) break;
             if (c-1 == -1) break;
-            if (grid[r][c] == grid[r+1][c-1]){
+            if (grid[r][c].equals(grid[r+1][c-1])){
                 count++;
                 r++;
                 c--;
@@ -174,7 +174,7 @@ public class Connect4plus1 {
         while (count<3){
             if (r-1 == -1) break;
             if (c-1 == -1) break;
-            if (grid[r][c] == grid[r-1][c-1]){
+            if (grid[r][c].equals(grid[r-1][c-1])){
                 count++;
                 r--;
                 c--;
@@ -190,7 +190,7 @@ public class Connect4plus1 {
         while(count<3){
             if (r+1 == 6) break;
             if (c+1 == 7) break;
-            if (grid[r][c] == grid[r+1][c+1]){
+            if (grid[r][c].equals(grid[r+1][c+1])){
                 count++;
                 r++;
                 c++;
@@ -200,8 +200,7 @@ public class Connect4plus1 {
         }
         return count == 3;
     }
-
-    public void columnCheck(int row, int column){
+    public void playerOneTurn(int row, int column){
         int t = row;
         if (isP1Turn() == true){
             while(row>=0){
@@ -214,6 +213,12 @@ public class Connect4plus1 {
                 }
             }
         }
+        checkRow= t;
+        p1Turn = !p1Turn;
+    }
+
+    public void playerTwoTurn(int row, int column){
+        int t = row;
         if (isP1Turn() == false){
             while(t>=0){
                 if (grid[t][column].equals("0")){
@@ -226,6 +231,7 @@ public class Connect4plus1 {
             }
         }
         checkRow= t;
+        p1Turn = !p1Turn;
     }
 
     public int userVal(String s){
@@ -236,8 +242,6 @@ public class Connect4plus1 {
             return -1;
         }
         if (x > 7 || x < 0)  return -1;
-        if (isP1Turn() == true) p1Turn = false;
-        else p1Turn = true;
         return x-1;
     }
 
@@ -253,6 +257,15 @@ public class Connect4plus1 {
 
     public boolean userValColFull(int column){
         return grid[0][column] != "0";
+    }
+
+    public boolean tie(int column){
+        int x;
+        int count = 0;
+        for (x = 0; x < 7; x++){
+            if (userValColFull(column)) count++;
+        }
+        return count==7;
     }
 
     public String userVCFR(){
