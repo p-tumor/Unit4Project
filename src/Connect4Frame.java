@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import static java.lang.System.exit;
 
-public class Connect4Frame extends JFrame implements ActionListener {
+/*public class Connect4Frame extends JFrame implements ActionListener {
     private JButton button;
     private Connect4plus1 game;
     private JLabel labelGrid;
@@ -123,3 +123,5 @@ public class Connect4Frame extends JFrame implements ActionListener {
     }
 
 }
+
+ */

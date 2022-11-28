@@ -7,12 +7,9 @@ import static java.lang.System.exit;
 
 public class Connect4Runner {
     public static void main(String[] args) {
-        new Connect4Frame();
 
         boolean gameOver = false;
-        int row = 5;
-        int col = 0;
-        boolean notValid = true;
+        boolean notValid;
 
         Scanner n = new Scanner(System.in);
 
@@ -20,24 +17,24 @@ public class Connect4Runner {
         String n1 = n.nextLine();
         System.out.println("Player 2 input your desired name: ");
         String n2 = n.nextLine();
+        //System.out.println("Would you like to do a challenge?");
+
 
         Connect4plus1 p = new Connect4plus1(n1, n2);
 
         System.out.println(p.displayGrid());
         while (gameOver == false) {
-            row = 5;
-            col = 0;
             notValid = true;
 
             //player 1 turn
-            while (notValid == true) {
+            while (notValid) {
                 System.out.printf("%s choose a column: ", p.getP1());
                 String colTemp = n.nextLine();
                 if (p.userVal(colTemp) == -1) {
                     System.out.println(p.userValRan());
                 } else {
-                    col = p.userVal(colTemp);
-                    if (!p.userValColFull(col)) {
+                    p.setCol(p.userVal(colTemp));
+                    if (!p.userValColFull(p.getCol())) {
                         notValid = false;
                     } else {
                         System.out.println(p.userVCFR());
@@ -45,26 +42,27 @@ public class Connect4Runner {
                 }
             }
 
-            p.playerOneTurn(row,col);
+            p.playerOneTurn();
+            System.out.println(p.getP1Turn());
             System.out.println(p.displayGrid());
-            System.out.println("IS it p1 turn "+p.isP1Turn());
+
             //game over check
-            gameOver = p.gameOver(col);
+            gameOver = p.gameOver();
             if (gameOver) break;
 
-            row = 5;
-            col = 0;
+            p.setRow(5);
+            p.setCol(0);
             notValid = true;
 
             //player 2 turn
             while (notValid) {
-                System.out.printf("%s choose a column: ", p.getP2());
+                System.out.printf("%s choose a column: ", p.getP1());
                 String colTemp = n.nextLine();
                 if (p.userVal(colTemp) == -1) {
                     System.out.println(p.userValRan());
                 } else {
-                    col = p.userVal(colTemp);
-                    if (!p.userValColFull(col)) {
+                    p.setCol(p.userVal(colTemp));
+                    if (!p.userValColFull(p.getCol())) {
                         notValid = false;
                     } else {
                         System.out.println(p.userVCFR());
@@ -72,53 +70,19 @@ public class Connect4Runner {
                 }
             }
 
-            p.playerTwoTurn(row,col);
+            p.playerTwoTurn();
+            System.out.println(p.getP1Turn());
             System.out.println(p.displayGrid());
 
 
             //game over check
-            gameOver = p.gameOver(col);
+            gameOver = p.gameOver();
             if (gameOver) break;
         }
 
         System.out.println(p.congratulate());
         exit(0);
     }
-
-
-    /*public static void clear() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")){
-                new ProcessB1uilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            }
-            else{
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (IOException | InterruptedException ex) {}
-    }*/
-
-    /*public final static void clearConsole()
-    {
-        try
-        {
-            final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows"))
-            {
-                Runtime.getRuntime().exec("cls");
-            }
-            else
-            {
-                Runtime.getRuntime().exec("clear");
-            }
-        }
-        catch (final Exception e)
-        {
-            //  Handle any exceptions.
-        }
-    }
-
-     */
-    }
+}
 
 

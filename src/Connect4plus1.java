@@ -11,25 +11,34 @@ public class Connect4plus1 {
             { "0" , "0" , "0" , "0" , "0" , "0" , "0" }
     };
     private int checkRow;
-    private String p1;
-    private String p2;
+    private final String P1;
+    private final String P2;
     private String color;
     private boolean p1Turn;
+    private int row;
+    private int col;
 
     public Connect4plus1(String n, String n2){
-        p1 = n;
-        p2 = n2;
+        P1 = n;
+        P2 = n2;
         p1Turn = true;
+        row = 5;
+        col = 0;
     }
     public Connect4plus1(){
-        p1 = "Player 1";
-        p2 = "Player 2";
+        P1 = "Player 1";
+        P2 = "Player 2";
         p1Turn = true;
+        row = 5;
+        col = 0;
     }
 
 
-    public String getP1(){return p1;}
-    public String getP2(){return p2;}
+    public String getP1(){return P1;}
+    public String getP2(){return P2;}
+    public int getCheckRow(){return checkRow;}
+    public int getRow(){return row;}
+    public int getCol(){return col;}
 
     public String getGrid(){
         String s = "-------------------------------\n";
@@ -50,9 +59,19 @@ public class Connect4plus1 {
         return s;
     }
 
-    public boolean isP1Turn(){
+    public boolean getP1Turn(){
         return p1Turn;
     }
+
+    public void setGrid(String[][] grid){
+        this.grid = grid;
+    }
+    public void setP1Turn(boolean p1Turn){
+        this.p1Turn = p1Turn;
+    }
+
+    public void setRow(int x){row = x;}
+    public void setCol(int x){col = x;}
 
     public String displayGrid(){
         String s = "-------------------------------\n";
@@ -75,25 +94,24 @@ public class Connect4plus1 {
     }
 
     public String congratulate(){
-        if (isP1Turn() == true) return "Congratulations " + p1 + ". You win!";
-        else return "Congratulations " + p2 + ". You win!";
+        if (getP1Turn()) return "Congratulations " + P1 + ". You win!";
+        else return "Congratulations " + P2 + ". You win!";
     }
 
-    public boolean gameOver(int column){
-        int row = checkRow;
-        if (downCheck(row, column)) return true;
-        if (LRCheck(row,column)) return true;
-        if (upperRight2LowerLeft(row,column)) return true;
-        if (upperLeft2LowerRight(row,column)) return true;
+    public boolean gameOver(){
+        if (downCheck()) return true;
+        if (lRCheck()) return true;
+        if (upperRight2LowerLeft()) return true;
+        if (upperLeft2LowerRight()) return true;
         else return false;
     }
 
-    private boolean downCheck(int row, int column){
+    private boolean downCheck(){
         int count = 0;
-        int i = row;
-        if (row <= 2){
+        int i = checkRow;
+        if (checkRow <= 2){
             while (count<3){
-                if (grid[i][column] == grid[i+1][column]){
+                if (grid[i][col] == grid[i+1][col]){
                     count++;
                     i++;
                 }else break;
@@ -102,25 +120,25 @@ public class Connect4plus1 {
         return count == 3;
     }
 
-    private boolean LRCheck(int row, int column){
+    private boolean lRCheck(){
         int count = 0;
-        int i = column;
+        int i = col;
         // left check
         while (count<3){
             if (i-1 == -1) break;
-            if (grid[row][i].equals(grid[row][i-1])){
+            if (grid[checkRow][i].equals(grid[checkRow][i-1])){
                 count++;
                 i--;
                 if (i-1 == -1) break;
             }else break;
         }
 
-        i = column;
+        i = col;
 
         //right check
         while (count<3){
             if (i+1 == 7) break;
-            if (grid[row][i].equals(grid[row][i+1])){
+            if (grid[checkRow][i].equals(grid[checkRow][i+1])){
                 count++;
                 i++;
                 if (i+1 == 7) break;
@@ -130,9 +148,9 @@ public class Connect4plus1 {
         return count == 3;
     }
 
-    private boolean upperRight2LowerLeft(int row, int column){
-        int r = row;
-        int c = column;
+    private boolean upperRight2LowerLeft(){
+        int r = checkRow;
+        int c = col;
         int count = 0;
 
         // upper right
@@ -147,8 +165,8 @@ public class Connect4plus1 {
                 if (c+1 == 7) break;
             }else break;
         }
-        r = row;
-        c = column;
+        r = checkRow;
+        c = col;
 
         //lower left
         while(count<3){
@@ -165,9 +183,9 @@ public class Connect4plus1 {
         return count == 3;
     }
 
-    private boolean upperLeft2LowerRight(int row, int column){
-        int r = row;
-        int c = column;
+    private boolean upperLeft2LowerRight(){
+        int r = checkRow;
+        int c = col;
         int count = 0;
 
         // upper left
@@ -183,8 +201,8 @@ public class Connect4plus1 {
             }else break;
         }
 
-        r = row;
-        c = column;
+        r = checkRow;
+        c = col;
 
         // lower right
         while(count<3){
@@ -200,12 +218,13 @@ public class Connect4plus1 {
         }
         return count == 3;
     }
-    public void playerOneTurn(int row, int column){
+
+    public void playerOneTurn(){
         int t = row;
-        if (isP1Turn() == true){
+        if (getP1Turn()){
             while(row>=0){
-                if (grid[t][column].equals("0")){
-                    grid[t][column] = "\033[31m1\033[0m";
+                if (grid[t][col].equals("0")){
+                    grid[t][col] = "\033[31m1\033[0m";
                     break;
                 }else{
                     t--;
@@ -213,16 +232,16 @@ public class Connect4plus1 {
                 }
             }
         }
-        checkRow= t;
-        p1Turn = !p1Turn;
+        checkRow = t;
+        if (!gameOver()) p1Turn = !p1Turn;
     }
 
-    public void playerTwoTurn(int row, int column){
+    public void playerTwoTurn(){
         int t = row;
-        if (isP1Turn() == false){
+        if (getP1Turn() == false){
             while(t>=0){
-                if (grid[t][column].equals("0")){
-                    grid[t][column] = "\033[33m2\033[0m";
+                if (grid[t][col].equals("0")){
+                    grid[t][col] = "\033[93m2\033[0m";
                     break;
                 }else{
                     t--;
@@ -231,7 +250,7 @@ public class Connect4plus1 {
             }
         }
         checkRow= t;
-        p1Turn = !p1Turn;
+        if (!gameOver()) p1Turn = !p1Turn;
     }
 
     public int userVal(String s){
@@ -280,7 +299,7 @@ public class Connect4plus1 {
         str += getGrid() + "\n";
         str += "Player 1 name: "+getP1()+"\n";
         str += "Player 2 name: "+getP2()+"\n";
-        if (isP1Turn()) str += "It is "+getP1()+"'s turn.";
+        if (getP1Turn()) str += "It is "+getP1()+"'s turn.";
         else str += "It is "+getP2()+"'s turn.";
         return str;
     }
