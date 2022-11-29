@@ -23,7 +23,7 @@ public class Connect4Runner {
         Connect4plus1 p = new Connect4plus1(n1, n2);
 
         System.out.println(p.displayGrid());
-        while (gameOver == false) {
+        while (gameOver == false || p.tie) {
             notValid = true;
 
             //player 1 turn

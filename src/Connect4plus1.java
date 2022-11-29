@@ -274,15 +274,15 @@ public class Connect4plus1 {
         return "Doofus.";
     }
 
-    public boolean userValColFull(int column){
-        return grid[0][column] != "0";
+    public boolean userValColFull(){
+        return grid[0][this.col] != "0";
     }
 
-    public boolean tie(int column){
+    public boolean tie(){
         int x;
         int count = 0;
         for (x = 0; x < 7; x++){
-            if (userValColFull(column)) count++;
+            if (userValColFull(col)) count++;
         }
         return count==7;
     }
