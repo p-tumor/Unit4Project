@@ -7,8 +7,6 @@ import static java.lang.System.exit;
 
 public class Connect4Runner {
     public static void main(String[] args) {
-
-        boolean gameOver = false;
         boolean notValid;
 
         Scanner n = new Scanner(System.in);
@@ -23,7 +21,7 @@ public class Connect4Runner {
         Connect4plus1 p = new Connect4plus1(n1, n2);
 
         System.out.println(p.displayGrid());
-        while (gameOver == false || p.tie) {
+        while (p.gameOver() == false && p.tie() == false) {
             notValid = true;
 
             //player 1 turn
@@ -43,12 +41,7 @@ public class Connect4Runner {
             }
 
             p.playerOneTurn();
-            System.out.println(p.getP1Turn());
             System.out.println(p.displayGrid());
-
-            //game over check
-            gameOver = p.gameOver();
-            if (gameOver) break;
 
             p.setRow(5);
             p.setCol(0);
@@ -56,7 +49,7 @@ public class Connect4Runner {
 
             //player 2 turn
             while (notValid) {
-                System.out.printf("%s choose a column: ", p.getP1());
+                System.out.printf("%s choose a column: ", p.getP2());
                 String colTemp = n.nextLine();
                 if (p.userVal(colTemp) == -1) {
                     System.out.println(p.userValRan());
@@ -71,15 +64,9 @@ public class Connect4Runner {
             }
 
             p.playerTwoTurn();
-            System.out.println(p.getP1Turn());
             System.out.println(p.displayGrid());
 
-
-            //game over check
-            gameOver = p.gameOver();
-            if (gameOver) break;
         }
-
         System.out.println(p.congratulate());
         exit(0);
     }
