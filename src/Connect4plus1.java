@@ -102,7 +102,8 @@ public class Connect4plus1 {
         if (downCheck()) return true;
         if (lRCheck()) return true;
         if (upperRight2LowerLeft()) return true;
-        return upperLeft2LowerRight();
+        if (upperLeft2LowerRight()) return true;
+        else return false;
     }
 
     private boolean downCheck(){
@@ -110,7 +111,7 @@ public class Connect4plus1 {
         int i = checkRow;
         if (checkRow <= 2){
             while (count<3){
-                if (grid[i][col].equals(grid[i + 1][col])){
+                if (grid[i][col].equals(grid[i+1][col])){
                     count++;
                     i++;
                 }else break;
@@ -237,7 +238,7 @@ public class Connect4plus1 {
 
     public void playerTwoTurn(){
         int t = row;
-        if (!getP1Turn()){
+        if (getP1Turn() == false){
             while(t>=0){
                 if (grid[t][col].equals("0")){
                     grid[t][col] = "\033[93m2\033[0m";
@@ -273,13 +274,16 @@ public class Connect4plus1 {
         return "Doofus.";
     }
 
-    public boolean userValColFull(int column){return !(grid[0][column].equals("0"));}
+    public boolean userValColFull(int col){return !grid[0][col].equals("0");}
 
     public boolean tie(){
-        int x;
         int count = 0;
-        for (x = 0; x < 7; x++){
-            if (userValColFull(x)) count++;
+        int column = 0;
+        for (int x = 0; x < 8; x++){
+            if (userValColFull(column)) {
+                count++;
+                column++;
+            }
         }
         return count==7;
     }
