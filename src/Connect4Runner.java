@@ -36,7 +36,9 @@ public class Connect4Runner {
                     System.out.println(newGame.userInputValidationRandomQuotes());
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
+                    System.out.println("this is coltemp2: "+colTemp2);
                     newGame.setColumn(colTemp2);
+                    System.out.println("this is new.game column: "+ newGame.getColumn());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {
