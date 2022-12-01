@@ -30,15 +30,16 @@ public class Connect4Runner {
 
             //player 1 turn
             while (notValid) {
+
                 System.out.printf("%s choose a column: ", newGame.getPLAYER_1_NAME());
                 String colTemp = n.nextLine();
+
                 if (newGame.userInputValidation(colTemp) == -1) {
                     System.out.println(newGame.userInputValidationRandomQuotes());
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
-                    System.out.println("this is coltemp2: "+colTemp2);
                     newGame.setColumn(colTemp2);
-                    System.out.println("this is new.game column: "+ newGame.getColumn());
+                    System.out.println(newGame.getRowToCheck());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {

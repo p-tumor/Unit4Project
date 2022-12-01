@@ -26,14 +26,58 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     }
 
     //getters
-    public String[][] getGameBoard() {return gameBoard;}
-    public String getPLAYER_1_NAME() {return PLAYER_1_NAME;}
-    public String getPLAYER_2_NAME() {return PLAYER_2_NAME;}
-    public byte getRow() {return row;}
-    public byte getColumn() {return column;}
-    public boolean isItPlayer1Turn(){return isItPlayer1Turn;}
+
+    public String[][] getGameBoard() {
+        return gameBoard;
+    }
+
+    public String getPLAYER_1_NAME() {
+        return PLAYER_1_NAME;
+    }
+
+    public String getPLAYER_2_NAME() {
+        return PLAYER_2_NAME;
+    }
+
+    public byte getTurnCount() {
+        return turnCount;
+    }
+
+    public byte getRow() {
+        return row;
+    }
+
+    public byte getColumn() {
+        return column;
+    }
+
+    public byte getRowToCheck() {
+        return rowToCheck;
+    }
+
+    public boolean isItPlayer1Turn() {
+        return isItPlayer1Turn;
+    }
+
 
     //setters
+
+
+    public void setGameBoard(String[][] gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public void setTurnCount(byte turnCount) {
+        this.turnCount = turnCount;
+    }
+
+    public void setRowToCheck(byte rowToCheck) {
+        this.rowToCheck = rowToCheck;
+    }
+
+    public void setItPlayer1Turn(boolean itPlayer1Turn) {
+        isItPlayer1Turn = itPlayer1Turn;
+    }
 
     public void setColumn(byte column) {
         this.column = column;
@@ -54,6 +98,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
                 if (columnNumbers == column){
                     String columnNumbersString = Byte.toString(columnNumbers);
                     gameBoardDisplay += "  \033[94m"+columnNumbersString+"\033[0m  ";
+                    columnNumbers++;
                 }
             }
             gameBoardDisplay += "  "+columnNumbers+"  ";
@@ -71,7 +116,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         byte count = 0;
         byte rowToCheckTemp = rowToCheck;
         if (!gameBoard[rowToCheck][column].equals("0")){
-            if (rowToCheck <= 2){
+            if (rowToCheck < 3){
                 while (count<3){
                     if (gameBoard[rowToCheckTemp][column].equals(gameBoard[rowToCheckTemp+1][column])){
                         count++;
@@ -202,18 +247,18 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     public void player1Turn(){
         byte rowTemp = row;
         if (isItPlayer1Turn()){
-            while (row >= 0 && rowTemp>-1) {//loop to check if the bottom of the column is filled. this is so token actually go to the bottom of the column. I know this loop may seem a bit point less, but i need this loop ok?
+            while (row >= 0 ) {//loop to check if the bottom of the column is filled. this is so token actually go to the bottom of the column. I know this loop may seem a bit point less, but i need this loop ok?
                 if (gameBoard[rowTemp][column].equals("0")) {
                     gameBoard[rowTemp][column] = "\033[31m1\033[0m";
                     turnCount++;
-                } else {
+                }else{
                     rowTemp--;
                     if (rowTemp == -1) break;
                 }
             }
         }
         rowToCheck = rowTemp;
-        if (!gameOver()) isItPlayer1Turn = !isItPlayer1Turn;//inverts playerturn variable so that the other turn my begin
+        isItPlayer1Turn = !isItPlayer1Turn;//inverts playerturn variable so that the other turn my begin
     }
 
     public void playerTwoTurn(){
@@ -230,7 +275,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
             }
         }
         rowToCheck = rowTemp;
-        if (!gameOver()) isItPlayer1Turn = !isItPlayer1Turn;
+        isItPlayer1Turn = !isItPlayer1Turn;
     }
 
     public int userInputValidation(String s){
