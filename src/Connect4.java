@@ -251,6 +251,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
                 if (gameBoard[rowTemp][column].equals("0")) {
                     gameBoard[rowTemp][column] = "\033[31m1\033[0m";
                     turnCount++;
+                    break;
                 }else{
                     rowTemp--;
                     if (rowTemp == -1) break;
@@ -258,7 +259,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
             }
         }
         rowToCheck = rowTemp;
-        isItPlayer1Turn = !isItPlayer1Turn;//inverts playerturn variable so that the other turn my begin
+        if (!gameOver()) isItPlayer1Turn = !isItPlayer1Turn;//inverts playerturn variable so that the other turn my begin
     }
 
     public void playerTwoTurn(){
@@ -268,6 +269,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
                 if (gameBoard[rowTemp][column].equals("0")){
                     gameBoard[rowTemp][column] = "\033[93m2\033[0m";
                     turnCount++;
+                    break;
                 }else{
                     rowTemp--;
                     if (rowTemp == -1) break;
@@ -275,7 +277,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
             }
         }
         rowToCheck = rowTemp;
-        isItPlayer1Turn = !isItPlayer1Turn;
+        if (!gameOver()) isItPlayer1Turn = !isItPlayer1Turn;
     }
 
     public int userInputValidation(String s){

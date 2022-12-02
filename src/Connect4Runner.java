@@ -21,11 +21,10 @@ public class Connect4Runner {
 
         Connect4 newGame = new Connect4(name1, name2);
         boolean gameOver = newGame.gameOver();
-        System.out.println(gameOver);
 
         System.out.println(newGame.displayGameBoard());
 
-        while (gameOver == false) {
+        while (!newGame.gameOver()) {
             notValid = true;
 
             //player 1 turn
@@ -38,8 +37,8 @@ public class Connect4Runner {
                     System.out.println(newGame.userInputValidationRandomQuotes());
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
-                    newGame.setColumn(colTemp2);
-                    System.out.println(newGame.getRowToCheck());
+                    newGame.setColumn((byte) (colTemp2-1));
+                    System.out.println("colTemp2 = " + newGame.getColumn());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {
@@ -49,6 +48,8 @@ public class Connect4Runner {
             }
 
             newGame.player1Turn();
+            System.out.println("this is the object column: "+newGame.getColumn());
+            System.out.println("this is the object row: "+newGame.getRow());
             System.out.println(newGame.displayGameBoard());
 
             newGame.setRow((byte)5);
@@ -63,7 +64,8 @@ public class Connect4Runner {
                     System.out.println(newGame.userInputValidationRandomQuotes());
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
-                    newGame.setColumn(colTemp2);
+                    newGame.setColumn((byte)(colTemp2-1));
+                    System.out.println("colTemp2 = " + newGame.getColumn());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {
@@ -73,15 +75,12 @@ public class Connect4Runner {
             }
 
             newGame.playerTwoTurn();
+            System.out.println("this is the object column: "+newGame.getColumn());
+            System.out.println("this is the object row: "+newGame.getRow());
             System.out.println(newGame.displayGameBoard());
 
         }
-        if (newGame.isItATie()){
-            System.out.println("Both are you losers are losers.");
-        }else{
-            System.out.println(newGame.congratulate());
-
-        }
+        System.out.println(newGame.congratulate());
         exit(0);
     }
 }
