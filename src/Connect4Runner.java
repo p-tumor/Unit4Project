@@ -1,9 +1,4 @@
-import java.awt.*;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Scanner;
-import javax.swing.*;
-
 import static java.lang.System.exit;
 
 public class Connect4Runner {
@@ -16,15 +11,14 @@ public class Connect4Runner {
         String name1 = n.nextLine();
         System.out.println("Player 2 input your desired name: ");
         String name2 = n.nextLine();
-        //System.out.println("Would you like to do a challenge?");
+
 
 
         Connect4 newGame = new Connect4(name1, name2);
         boolean gameOver = newGame.gameOver();
 
         System.out.println(newGame.displayGameBoard());
-
-        while (!newGame.gameOver()) {
+        while (!gameOver) {
             notValid = true;
 
             //player 1 turn
@@ -38,7 +32,6 @@ public class Connect4Runner {
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
                     newGame.setColumn((byte) (colTemp2-1));
-                    System.out.println("colTemp2 = " + newGame.getColumn());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {
@@ -48,9 +41,9 @@ public class Connect4Runner {
             }
 
             newGame.player1Turn();
-            System.out.println("this is the object column: "+newGame.getColumn());
-            System.out.println("this is the object row: "+newGame.getRow());
             System.out.println(newGame.displayGameBoard());
+            gameOver = newGame.gameOver();
+            if (gameOver) break;
 
             newGame.setRow((byte)5);
             newGame.setColumn((byte)0);
@@ -65,7 +58,6 @@ public class Connect4Runner {
                 } else {
                     byte colTemp2 = Byte.parseByte(colTemp);
                     newGame.setColumn((byte)(colTemp2-1));
-                    System.out.println("colTemp2 = " + newGame.getColumn());
                     if (!newGame.fullColumnCheck(newGame.getColumn())) {
                         notValid = false;
                     } else {
@@ -75,12 +67,13 @@ public class Connect4Runner {
             }
 
             newGame.playerTwoTurn();
-            System.out.println("this is the object column: "+newGame.getColumn());
-            System.out.println("this is the object row: "+newGame.getRow());
             System.out.println(newGame.displayGameBoard());
+            gameOver = newGame.gameOver();
+            if (gameOver) break;
 
         }
-        System.out.println(newGame.congratulate());
+        if (newGame.isItATie()) System.out.println("Both of you losers are losers");
+        else System.out.println(newGame.congratulate());
         exit(0);
     }
 }

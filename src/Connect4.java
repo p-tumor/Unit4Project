@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Connect4 {//this is a full rewrite to improve readability of code. I was rereading the other class i made and really didn't like it.
     private String[][] gameBoard = {
             { "0" , "0" , "0" , "0" , "0" , "0" , "0" },
@@ -23,6 +21,8 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         isItPlayer1Turn = true;//player 1 always starts first
         row = 5;//the bottom row
         column = 0;//the leftmost column
+        rowToCheck = 5;
+        turnCount = 0;
     }
 
     //getters
@@ -59,7 +59,6 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         return isItPlayer1Turn;
     }
 
-
     //setters
 
 
@@ -95,10 +94,11 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         byte columnNumbers = 1;//the numbers below the columns
         while (columnNumbers < 8){
             if (turnCount > 0){
-                if (columnNumbers == column){
+                if (columnNumbers == column+1){
                     String columnNumbersString = Byte.toString(columnNumbers);
                     gameBoardDisplay += "  \033[94m"+columnNumbersString+"\033[0m  ";
                     columnNumbers++;
+                    if (columnNumbers == 8) break;
                 }
             }
             gameBoardDisplay += "  "+columnNumbers+"  ";
@@ -134,27 +134,27 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
 
         if (!gameBoard[rowToCheck][columnTemp].equals("0")){
             // left check
-            if (columnTemp-1 != -1){//to make sure there are no out of bounds errors
-                while (count<3){
-                    if (gameBoard[rowToCheck][columnTemp].equals(gameBoard[rowToCheck][columnTemp-1])){
-                        count++;
-                        columnTemp--;//to check the following left column
-                        if (columnTemp-1 != -1) break;//if this goes out of bounds, the loop is stopped
-                    }else break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may begin
-                }
+            while (count<3){
+                if (columnTemp-1 == -1) break;
+                if (gameBoard[rowToCheck][columnTemp].equals(gameBoard[rowToCheck][columnTemp-1])){
+                    count++;
+                    columnTemp--;//to check the following left column
+                    if (columnTemp-1 != -1) break;//if this goes out of bounds, the loop is stopped
+                }else break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may begin
             }
+
 
             columnTemp = column;//goes back to last placed token and checks the right
 
             //right check
-            if (columnTemp+1 == 7){
-                while (count<3){
-                    if (gameBoard[rowToCheck][columnTemp].equals(gameBoard[rowToCheck][columnTemp+1])){
-                        count++;
-                        columnTemp++;//to check the following right column
-                        if (columnTemp+1 == 7) break;//if the increment goes out of bounds, the loop is stopped
-                    }else break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may being
-                }
+            while (count<3) {
+                if (columnTemp + 1 == 7) break;
+                if (gameBoard[rowToCheck][columnTemp].equals(gameBoard[rowToCheck][columnTemp + 1])) {
+                    count++;
+                    columnTemp++;//to check the following right column
+                    if (columnTemp + 1 == 7) break;//if the increment goes out of bounds, the loop is stopped
+                } else
+                    break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may being
             }
         }
         return count == 3;
@@ -166,17 +166,16 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         byte count = 0;
 
         if (!gameBoard[rowToCheckTemp][columnTemp].equals("0")) {
-            if (rowToCheckTemp - 1 != -1 && columnTemp + 1 != 7) {//make sure there are no out of bounds errors
-                while (count < 3) {
-                    if ((gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp - 1][columnTemp + 1]))) {
-                        count++;
-                        rowToCheckTemp--;//moves upward
-                        columnTemp++;//moves to the right
-                        if (rowToCheckTemp - 1 == -1 || columnTemp + 1 == 7)
-                            break;//if either variables go otu of bounds, loop is stopped
-                    } else
-                        break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may being
-                }
+            while (count < 3) {
+                if (rowToCheckTemp - 1 == -1 || columnTemp + 1 == 7) break; //make sure there are no out of bounds errors
+                if ((gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp - 1][columnTemp + 1]))) {
+                    count++;
+                    rowToCheckTemp--;//moves upward
+                    columnTemp++;//moves to the right
+                    if (rowToCheckTemp - 1 == -1 || columnTemp + 1 == 7)
+                        break;//if either variables go otu of bounds, loop is stopped
+                } else
+                    break;//this break is so that when the next token is found to not be the same, it ends the loop so that the right check may being
             }
 
             //reset to last placed token
@@ -184,15 +183,14 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
             columnTemp = column;
 
             //lower left
-            if (rowToCheckTemp + 1 != 6 && columnTemp - 1 != -1) {
-                while (count < 3) {
-                    if (gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp + 1][columnTemp - 1])) {
-                        count++;
-                        rowToCheckTemp++;//moves downward
-                        columnTemp--;//moves to the left
-                        if (rowToCheckTemp + 1 == 6 || columnTemp - 1 == -1) break;//another out of bounds check
-                    } else break;
-                }
+            while (count < 3) {
+                if (rowToCheckTemp + 1 == 6 || columnTemp - 1 == -1) break;
+                if (gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp + 1][columnTemp - 1])) {
+                    count++;
+                    rowToCheckTemp++;//moves downward
+                    columnTemp--;//moves to the left
+                    if (rowToCheckTemp + 1 == 6 || columnTemp - 1 == -1) break;//another out of bounds check
+                } else break;
             }
         }
         return count == 3;
@@ -206,24 +204,24 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
 
         if (!gameBoard[rowToCheckTemp][columnTemp].equals("0")){
             // upper left
-            if (rowToCheckTemp-1 != -1 && columnTemp-1 != -1){//bet you can't tell me what this is. i'll help. its another out of bounds check
-                while (count<3){
-                    if (gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp-1][columnTemp-1])){
-                        count++;
-                        rowToCheckTemp--;//moves upward
-                        columnTemp--;//moves to the left
-                        if (rowToCheckTemp-1 == -1 || columnTemp-1 == -1) break;//yet another out of bounds check
-                    }else break;
-                }
+            while (count<3){
+                if (rowToCheckTemp-1 == -1 || columnTemp-1 == -1)break;//bet you can't tell me what this is. i'll help. its another out of bounds check
+                if (gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp-1][columnTemp-1])){
+                    count++;
+                    rowToCheckTemp--;//moves upward
+                    columnTemp--;//moves to the left
+                    if (rowToCheckTemp-1 == -1 || columnTemp-1 == -1) break;//yet another out of bounds check
+                }else break;
             }
+
 
             //reset to last placed
             rowToCheckTemp = rowToCheck;
             columnTemp = column;
 
             // lower right
-            if (rowToCheckTemp+1 != 6 && columnTemp+1 != 7){//out of bounds check
                 while(count<3){
+                    if (rowToCheckTemp+1 == 6 || columnTemp+1 == 7) break;
                     if (gameBoard[rowToCheckTemp][columnTemp].equals(gameBoard[rowToCheckTemp+1][columnTemp+1])){
                         count++;
                         rowToCheckTemp++;//moves downward
@@ -231,17 +229,16 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
                         if (rowToCheckTemp+1 == 6 || columnTemp+1 == 7) break;//wow who would've guessed, another out of bounds check
                     }else break;
                 }
-            }
         }
         return count == 3;
     }
 
     public boolean gameOver(){// if any of these are true, game over.
-        if (downwardCheck() == true) return true;
-        if (leftAndRightCheck() == true) return true;
-        if (upperLeftToLowerRight() == true) return true;
-        if (upperRightToLowerLeft() == true) return true;
-        return false;
+        if (downwardCheck()) return true;
+        if (leftAndRightCheck()) return true;
+        if (upperLeftToLowerRight()) return true;
+        if (upperRightToLowerLeft()) return true;
+        return isItATie();
     }
 
     public void player1Turn(){
@@ -327,11 +324,12 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
 
     public String toString(){
         String display = "This is the current grid: \n";
-        display += getGameBoard() + "\n";
-        display += "Player 1 name: "+getPLAYER_1_NAME()+"\n";
-        display += "Player 2 name: "+getPLAYER_2_NAME()+"\n";
-        if (isItPlayer1Turn()) display += "It is "+getPLAYER_1_NAME()+"'s turn.";
-        else display += "It is "+getPLAYER_2_NAME()+"'s turn.";
+        display += gameBoard + "\n";
+        display += "Player 1 name: "+PLAYER_1_NAME+"\n";
+        display += "Player 2 name: "+PLAYER_2_NAME+"\n";
+        if (isItPlayer1Turn()) display += "It is "+PLAYER_1_NAME+"'s turn.";
+        else display += "It is "+PLAYER_2_NAME+"'s turn.";
+        display += "This is turn " + turnCount + ".";
         return display;
     }
 }
