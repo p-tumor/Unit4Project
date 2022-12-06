@@ -9,6 +9,8 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     };
     private final String PLAYER_1_NAME;
     private final String PLAYER_2_NAME;
+    private String player1Color;
+    private String player2Color;
     private byte turnCount;
     private byte row;
     private byte column;
@@ -23,6 +25,19 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         column = 0;//the leftmost column
         rowToCheck = 5;
         turnCount = 0;
+        player1Color = "\033[31m";
+        player2Color = "\033[93m";
+    }
+    public Connect4(String player1Name, String player2Name,String player1Color,String player2Color){
+        PLAYER_1_NAME = player1Name;
+        PLAYER_2_NAME = player2Name;
+        isItPlayer1Turn = true;//player 1 always starts first
+        row = 5;//the bottom row
+        column = 0;//the leftmost column
+        rowToCheck = 5;
+        turnCount = 0;
+        this.player1Color = player1Color;
+        this.player2Color = player2Color;
     }
 
     //getters
@@ -320,6 +335,22 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     public String congratulate(){
         if (isItPlayer1Turn()) return "Congratulations " + PLAYER_1_NAME + ". You win!";
         else return "Congratulations " + PLAYER_2_NAME + ". You win!";
+    }
+
+    public void setPlayer1Color(String player1Color) {
+        if(player1Color.equals("GREEN") || player1Color.equals("green")) this.player1Color = "\033[93m";
+        if(player1Color.equals("BLUE") || player1Color.equals("blue")) this.player1Color = "\033[0;31m";
+        if(player1Color.equals("YELLOW") || player1Color.equals("yellow")) this.player1Color = "\033[93m";
+        if(player1Color.equals("PURPLE") || player1Color.equals("purple")) this.player1Color = "\033[93m";
+        if(player1Color.equals("CYAN") || player1Color.equals("cyan")) this.player1Color = "\033[93m";
+    }
+
+    public boolean userValidationColorSetter(String colorName){
+        String[] color = {"GREEN","green","BLUE","blue","YELLOW","yellow","PURPLE","purple","CYAN","cyan"};
+        for (String s : color) {
+            if (s.equals(colorName)) return true;
+        }
+        return false;
     }
 
     public String toString(){
