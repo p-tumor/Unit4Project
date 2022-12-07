@@ -73,6 +73,8 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     public boolean isItPlayer1Turn() {
         return isItPlayer1Turn;
     }
+    public String getPlayer1Color(){return player1Color;}
+    public String getPlayer2Color(){return player2Color;}
 
     //setters
 
@@ -123,6 +125,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         gameBoardDisplay += "-------------------------------";
         return gameBoardDisplay;
     }
+
 
     //please note all checks start at from the last placed token
     //also keep in mind all checks only look for three because the placed token is already counted, obviously.
@@ -261,7 +264,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         if (isItPlayer1Turn()){
             while (row >= 0 ) {//loop to check if the bottom of the column is filled. this is so token actually go to the bottom of the column. I know this loop may seem a bit point less, but i need this loop ok?
                 if (gameBoard[rowTemp][column].equals("0")) {
-                    gameBoard[rowTemp][column] = "\033[31m1\033[0m";
+                    gameBoard[rowTemp][column] = player1Color+"1\033[0m";
                     turnCount++;
                     break;
                 }else{
@@ -279,7 +282,7 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
         if (!isItPlayer1Turn()){
             while(rowTemp>=0){
                 if (gameBoard[rowTemp][column].equals("0")){
-                    gameBoard[rowTemp][column] = "\033[93m2\033[0m";
+                    gameBoard[rowTemp][column] = player2Color+"2\033[0m";
                     turnCount++;
                     break;
                 }else{
@@ -338,15 +341,25 @@ public class Connect4 {//this is a full rewrite to improve readability of code. 
     }
 
     public void setPlayer1Color(String player1Color) {
-        if(player1Color.equals("GREEN") || player1Color.equals("green")) this.player1Color = "\033[93m";
-        if(player1Color.equals("BLUE") || player1Color.equals("blue")) this.player1Color = "\033[0;31m";
+        if(player1Color.equals("GREEN") || player1Color.equals("green")) this.player1Color = "\033[32m";
+        if(player1Color.equals("BLUE") || player1Color.equals("blue")) this.player1Color = "\033[34m";
         if(player1Color.equals("YELLOW") || player1Color.equals("yellow")) this.player1Color = "\033[93m";
-        if(player1Color.equals("PURPLE") || player1Color.equals("purple")) this.player1Color = "\033[93m";
-        if(player1Color.equals("CYAN") || player1Color.equals("cyan")) this.player1Color = "\033[93m";
+        if(player1Color.equals("MAGENTA") || player1Color.equals("magenta")) this.player1Color = "\033[35m";
+        if(player1Color.equals("CYAN") || player1Color.equals("cyan")) this.player1Color = "\033[96m";
+        if(player1Color.equals("RED") || player1Color.equals("red")) this.player1Color = "\033[31m";
+    }
+
+    public void setPlayer2Color(String player2Color) {
+        if(player2Color.equals("GREEN") || player2Color.equals("green")) this.player2Color = "\033[32m";
+        if(player2Color.equals("BLUE") || player2Color.equals("blue")) this.player2Color = "\033[34m";
+        if(player2Color.equals("YELLOW") || player2Color.equals("yellow")) this.player2Color = "\033[93m";
+        if(player2Color.equals("MAGENTA") || player2Color.equals("magenta")) this.player2Color = "\033[35m";
+        if(player2Color.equals("CYAN") || player2Color.equals("cyan")) this.player2Color = "\033[96m";
+        if(player2Color.equals("RED") || player2Color.equals("red")) this.player2Color = "\033[31m";
     }
 
     public boolean userValidationColorSetter(String colorName){
-        String[] color = {"GREEN","green","BLUE","blue","YELLOW","yellow","PURPLE","purple","CYAN","cyan"};
+        String[] color = {"GREEN","green","BLUE","blue","YELLOW","yellow","MAGENTA","magenta","CYAN","cyan","red","RED",};
         for (String s : color) {
             if (s.equals(colorName)) return true;
         }

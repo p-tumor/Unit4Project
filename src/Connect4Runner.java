@@ -4,34 +4,50 @@ import static java.lang.System.exit;
 public class Connect4Runner {
     public static void main(String[] args) {
         boolean notValid = true;
-
         Scanner n = new Scanner(System.in);
+        String player1Color="";
+        String player2Color="";
+        String[] color = {"GREEN","green","BLUE","blue","YELLOW","yellow","MAGENTA","magenta","CYAN","cyan","red","RED",};
 
 
         System.out.println("Player 1 input your desired name: ");
         String name1 = n.nextLine();
-        String player1Color;
-        String player2Color;
-
-
-
         System.out.println("Player 2 input your desired name: ");
         String name2 = n.nextLine();
 
+        Connect4 newGame;
 
-
-
-
-        Connect4 newGame = new Connect4(name1, name2, player1Color,player2Color);
-        while (!notValid){
-            System.out.println("What color would you like your token to be?");
+        while (notValid){
+            System.out.println(name1 +" what color would you like your token to be?\n" +
+                    "Choices:Green, Blue, Yellow, Magenta, Cyan, Red (all caps or all lowercase)");
             player1Color = n.nextLine();
-            if (newGame.pl)
+            for (String s : color){
+                if (s.equals(player1Color)) {
+                    notValid = false;
+                    break;
+                }
+            }
         }
-        System.out.println("What color would you like your token to be?");
-        player2Color = n.nextLine();
-        boolean gameOver = newGame.gameOver();
 
+        notValid = true;
+
+        while (notValid){
+            System.out.println(name2+" what color would you like your token to be?\n" +
+                    "Choices:Green, Blue, Yellow, Magenta, Cyan, Red (all caps or all lowercase)");
+            player2Color = n.nextLine();
+            for (String s : color){
+                if (s.equals(player2Color)) {
+                    notValid = false;
+                    break;
+                }
+            }
+        }
+
+        newGame = new Connect4(name1, name2);
+        newGame.setPlayer1Color(player1Color);
+        newGame.setPlayer2Color(player2Color);
+
+        boolean gameOver = newGame.gameOver();
         System.out.println(newGame.displayGameBoard());
         while (!gameOver) {
             notValid = true;
